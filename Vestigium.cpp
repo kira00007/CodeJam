@@ -1,67 +1,62 @@
-#include<stdio.h>
-#include<math.h>
-#define ll unsigned long long int
-//%llu for scaning and ll for int
+#include <bits/stdc++.h>
+#define ll long long 
+#define IO \
+    freopen("input.txt", "r", stdin); \
+    freopen("output.txt", "w", stdout);
+#define MOD 1000000007
+using namespace std;
+
+void solve(){
+    int n; cin>>n;
+    vector<vector<int>> m(n, vector<int>(n));
+    for(int i=0; i<n; i++) for(int j=0; j<n; j++) cin>>m[i][j];
+    int trace=0, rows=0, columns=0;
+    for(int i=0; i<n; i++){
+        set<int> s1, s2;
+        for(int j=0; j<n; j++){
+            if(i==j) trace += m[i][j];
+            s1.insert(m[i][j]);
+            s2.insert(m[j][i]);
+        }
+        rows += s1.size()!=n;
+        columns += s2.size()!=n;
+    }
+    cout<<trace<<" "<<rows<<" "<<columns<<"\n";
+}
 
 int main(){
-	int t, n, i, j, k, br, bc, r, c, l, t1;
-	scanf("%d", &t);
-    t1 = t;
-	while(t--)
-    {
-        scanf("%d", &n);
-        int a[n][n];
-
-        for(i=0; i<n; i++)
-            for(j=0; j<n; j++)
-                scanf("%d", &a[i][j]);
-        //Trace
-        k = 0;
-        for(i=0; i<n; i++)
-            k = k + a[i][i];
-
-        //Rows
-        r=0;
-        for(i=0; i<n; i++)
-        {
-            br = 0;
-            for(j=0; j<n-1; j++)
-            {
-                for(l=j+1; l<n; l++)
-                {
-                    if(a[i][j] == a[i][l])
-                    {
-                        r++;
-                        br = 1;
-                        break;
-                    }
-                }
-                if(br == 1)
-                    break;
-            }
-        }
-
-        //Columns
-        c = 0;
-        for(j=0; j<n; j++)
-        {
-            bc = 0;
-            for(i=0; i<n-1; i++)
-            {
-                for(l=i+1; l<n; l++)
-                {
-                    if(a[i][j] == a[l][j])
-                    {
-                        c++;
-                        bc = 1;
-                        break;
-                    }
-                }
-                if(bc == 1)
-                    break;
-            }
-        }
-
-        printf("Case #%d: %d %d %d\n", (t1-t), k, r, c);
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    // IO;
+    int t = 1;
+    cin>>t;
+    for(int i=1; i<=t; i++){
+        cout<<"Case #"<<i<<": ";
+        solve();
     }
+    return 0;
 }
+
+/*
+SAMPLE INPUT: 
+3
+4
+1 2 3 4
+2 1 4 3
+3 4 1 2
+4 3 2 1
+4
+2 2 2 2
+2 3 2 3
+2 2 2 3
+2 2 2 2
+3
+2 1 3
+1 3 2
+1 2 3
+
+SAMPLE OUTPUT:
+Case #1: 4 0 0
+Case #2: 9 4 4
+Case #3: 8 0 2
+*/
